@@ -1,6 +1,6 @@
 # Build the course site, validate it, and publish it to GitHub Pages.
 #
-# Trigger: every push to master (the default branch), plus manual dispatch.
+# Trigger: every push to main (the default branch), plus manual dispatch.
 # Hosting: project site at https://nadeem-majeedch.github.io/Securing-AI-Systems/
 #          (base path /Securing-AI-Systems/, set by `site_url` in mkdocs.yml).
 # Docs:     DEPLOYMENT.md
@@ -19,7 +19,7 @@ name: Deploy course site to GitHub Pages
 
 on:
   push:
-    branches: [master]
+    branches: [main]
   workflow_dispatch:
 
 # Default denial. Each job grants exactly what it needs.
@@ -110,7 +110,7 @@ jobs:
     needs: build
     # A manual run from a feature branch validates the build above but must
     # never publish: only the default branch is deployable.
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
