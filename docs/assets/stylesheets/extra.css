@@ -1,0 +1,1574 @@
+/* ==========================================================================
+   Securing AI Systems — design system
+   --------------------------------------------------------------------------
+   Layers:
+     1. Design tokens (both colour schemes)
+     2. Base typography
+     3. Header, navigation and tabs
+     4. Content: headings, links, tables, code, admonitions
+     5. Components: hero, stats, cards, badges, module head, progress
+     6. Footer
+     7. Accessibility and motion
+     8. Responsive and print
+   Colour never carries meaning alone: every badge pairs colour with a word.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Design tokens
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* navy scale */
+  --sas-navy-950: #050b14;
+  --sas-navy-900: #070e1a;
+  --sas-navy-800: #0b1a2f;
+  --sas-navy-700: #122a47;
+  --sas-navy-600: #1b3a5e;
+
+  /* cyan accent */
+  --sas-cyan-300: #67e8f9;
+  --sas-cyan-400: #22d3ee;
+  --sas-cyan-600: #0e7490;
+  --sas-cyan-700: #0b5c72;
+
+  /* status */
+  --sas-ok: #34d399;
+  --sas-warn: #fbbf24;
+  --sas-danger: #f87171;
+  --sas-info: #60a5fa;
+
+  --sas-radius: 0.5rem;
+  --sas-radius-lg: 0.9rem;
+  --sas-border: 1px solid var(--sas-navy-700);
+  --sas-shadow: 0 1px 2px rgba(0, 0, 0, 0.24), 0 8px 24px rgba(0, 0, 0, 0.18);
+  --sas-max: 1180px; /* px, not rem: Material's root is 20px */
+
+  --sas-font-sans: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont,
+    "Helvetica Neue", Arial, sans-serif;
+  --sas-font-mono: "JetBrains Mono", "Cascadia Code", "SF Mono",
+    "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+}
+
+/* Dark scheme (default in this course) */
+[data-md-color-scheme="slate"] {
+  --md-hue: 215;
+
+  --md-default-bg-color: #070e1a;
+  --md-default-bg-color--light: #0b1a2f;
+  --md-default-bg-color--lighter: #122a47;
+  --md-default-bg-color--lightest: #173252;
+
+  --md-default-fg-color: #e6edf6;
+  --md-default-fg-color--light: #a9bbd0;
+  --md-default-fg-color--lighter: #7e93ab;
+  --md-default-fg-color--lightest: #2a3f57;
+
+  --md-primary-fg-color: #0b1a2f;
+  --md-primary-fg-color--light: #122a47;
+  --md-primary-fg-color--dark: #050b14;
+  --md-primary-bg-color: #e6edf6;
+  --md-primary-bg-color--light: #a9bbd0;
+
+  --md-accent-fg-color: #22d3ee;
+  --md-accent-fg-color--transparent: rgba(34, 211, 238, 0.12);
+  --md-accent-bg-color: #050b14;
+
+  --md-typeset-a-color: #67e8f9;
+  --md-typeset-color: #e6edf6;
+
+  --md-code-fg-color: #d7e5f4;
+  --md-code-bg-color: #0b1a2f;
+  --md-code-hl-color: rgba(34, 211, 238, 0.18);
+
+  --md-typeset-table-color: rgba(230, 237, 246, 0.14);
+  --md-typeset-table-color--light: rgba(230, 237, 246, 0.07);
+
+  --md-admonition-bg-color: rgba(11, 26, 47, 0.7);
+
+  --md-footer-bg-color: #050b14;
+  --md-footer-bg-color--dark: #03080f;
+  --md-footer-fg-color: #e6edf6;
+  --md-footer-fg-color--light: #a9bbd0;
+  --md-footer-fg-color--lighter: #7e93ab;
+
+  /* Mermaid is themed through these variables by Material's bundled runtime.
+     Do not initialise Mermaid separately. */
+  --md-mermaid-font-family: var(--sas-font-sans);
+  --md-mermaid-edge-color: rgba(167, 199, 231, 0.55);
+  --md-mermaid-node-bg-color: #10243c;
+  --md-mermaid-node-fg-color: #67e8f9;
+  --md-mermaid-label-bg-color: #0b1a2f;
+  --md-mermaid-label-fg-color: #e6edf6;
+}
+
+/* Light scheme */
+[data-md-color-scheme="default"] {
+  --md-hue: 215;
+
+  --md-default-bg-color: #f7f9fc;
+  --md-default-bg-color--light: #ffffff;
+  --md-default-bg-color--lighter: #eef3f9;
+  --md-default-bg-color--lightest: #e4ecf5;
+
+  --md-default-fg-color: #0b1a2f;
+  --md-default-fg-color--light: #40566f;
+  --md-default-fg-color--lighter: #6b7f96;
+  --md-default-fg-color--lightest: #c8d5e3;
+
+  --md-primary-fg-color: #0b1a2f;
+  --md-primary-fg-color--light: #122a47;
+  --md-primary-fg-color--dark: #050b14;
+  --md-primary-bg-color: #ffffff;
+  --md-primary-bg-color--light: #dbe6f2;
+
+  --md-accent-fg-color: #0e7490;
+  --md-accent-fg-color--transparent: rgba(14, 116, 144, 0.1);
+  --md-accent-bg-color: #ffffff;
+
+  --md-typeset-a-color: #0b5c72;
+  --md-typeset-color: #0b1a2f;
+
+  --md-code-fg-color: #10243c;
+  --md-code-bg-color: #eef3f9;
+  --md-code-hl-color: rgba(14, 116, 144, 0.16);
+
+  --md-typeset-table-color: rgba(11, 26, 47, 0.16);
+  --md-typeset-table-color--light: rgba(11, 26, 47, 0.06);
+
+  --md-admonition-bg-color: #ffffff;
+
+  --md-footer-bg-color: #0b1a2f;
+  --md-footer-bg-color--dark: #070e1a;
+  --md-footer-fg-color: #e6edf6;
+  --md-footer-fg-color--light: #a9bbd0;
+  --md-footer-fg-color--lighter: #7e93ab;
+
+  --md-mermaid-font-family: var(--sas-font-sans);
+  --md-mermaid-edge-color: rgba(11, 26, 47, 0.6);
+  --md-mermaid-node-bg-color: #e8f1fb;
+  --md-mermaid-node-fg-color: #0b5c72;
+  --md-mermaid-label-bg-color: #ffffff;
+  --md-mermaid-label-fg-color: #0b1a2f;
+}
+
+/* --------------------------------------------------------------------------
+   2. Base typography
+   -------------------------------------------------------------------------- */
+
+body,
+input {
+  font-family: var(--sas-font-sans);
+}
+
+.md-typeset {
+  font-size: 0.82rem;
+  line-height: 1.68;
+  letter-spacing: 0.002em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Material gives the content wrapper its side spacing with margins. The
+   max-width centring below replaces those margins, so the room they provided
+   is restored as padding — otherwise every page is flush to the screen edge
+   on a phone. */
+.md-content__inner.md-typeset {
+  max-width: var(--sas-max);
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 3.4vw, 2.4rem);
+  padding-bottom: 1.4rem;
+}
+
+/* Material caps the whole grid at 61rem, which leaves a lot of empty screen
+   on a laptop and squeezes tables. The course grid goes to 76rem; below that
+   breakpoint the layout is unchanged. */
+@media screen and (min-width: 76.25em) {
+  .md-grid {
+    max-width: 76rem;
+  }
+}
+
+.md-typeset p {
+  max-width: 68ch;
+}
+
+.md-typeset code,
+.md-typeset pre,
+.md-typeset kbd {
+  font-family: var(--sas-font-mono);
+  font-variant-ligatures: none;
+}
+
+/* --------------------------------------------------------------------------
+   3. Header, navigation and tabs
+   -------------------------------------------------------------------------- */
+
+.md-header,
+.md-tabs {
+  border-bottom: 1px solid var(--sas-navy-700);
+  box-shadow: none;
+}
+
+[data-md-color-scheme="default"] .md-header,
+[data-md-color-scheme="default"] .md-tabs {
+  border-bottom-color: rgba(11, 26, 47, 0.9);
+}
+
+.md-header__title {
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.md-tabs__link {
+  font-weight: 550;
+  opacity: 0.82;
+}
+
+.md-tabs__link--active,
+.md-tabs__link:hover {
+  opacity: 1;
+}
+
+.md-tabs__item {
+  height: 2.4rem;
+}
+
+.md-tabs__link {
+  margin-top: 0.65rem;
+}
+
+/* Sidebar */
+.md-nav__link {
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+
+.md-nav__title {
+  font-weight: 650;
+  letter-spacing: -0.005em;
+}
+
+.md-nav__item--section > .md-nav__link {
+  color: var(--md-default-fg-color);
+  font-weight: 650;
+}
+
+.md-nav__link--active,
+.md-nav__item .md-nav__link--active {
+  font-weight: 600;
+}
+
+/* Table of contents */
+.md-nav--secondary .md-nav__link {
+  font-size: 0.68rem;
+}
+
+/* --------------------------------------------------------------------------
+   4. Content
+   -------------------------------------------------------------------------- */
+
+.md-typeset h1 {
+  font-weight: 700;
+  letter-spacing: -0.022em;
+  color: var(--md-default-fg-color);
+  margin-bottom: 0.6em;
+}
+
+.md-typeset h2 {
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  margin-top: 2.2em;
+  padding-bottom: 0.28em;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.md-typeset h3 {
+  font-weight: 620;
+  letter-spacing: -0.008em;
+  margin-top: 1.8em;
+}
+
+.md-typeset h4 {
+  font-weight: 600;
+  color: var(--md-default-fg-color--light);
+  text-transform: none;
+}
+
+.md-typeset a {
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.16em;
+}
+
+.md-typeset a:hover {
+  text-decoration: underline;
+}
+
+/* Tables */
+.md-typeset table:not([class]) {
+  border: var(--sas-border);
+  border-radius: var(--sas-radius);
+  overflow: hidden;
+  font-size: 0.72rem;
+  box-shadow: none;
+  display: table;
+  width: 100%;
+}
+
+.md-typeset table:not([class]) th {
+  background-color: var(--md-default-bg-color--light);
+  color: var(--md-default-fg-color);
+  font-weight: 650;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+  white-space: nowrap;
+}
+
+.md-typeset table:not([class]) td {
+  border-top: 1px solid var(--md-typeset-table-color--light);
+  vertical-align: top;
+}
+
+.md-typeset table:not([class]) tbody tr:hover {
+  background-color: var(--md-typeset-table-color--light);
+}
+
+/* Code */
+.md-typeset pre {
+  border: var(--sas-border);
+  border-radius: var(--sas-radius);
+  box-shadow: none;
+}
+
+.md-typeset pre > code {
+  border-radius: var(--sas-radius);
+}
+
+.md-typeset code {
+  border-radius: 0.24rem;
+  padding: 0.1em 0.34em;
+  font-size: 0.84em;
+}
+
+.md-typeset pre code {
+  font-size: 0.78em;
+  line-height: 1.62;
+}
+
+.md-clipboard {
+  color: var(--md-default-fg-color--lighter);
+}
+
+/* Admonitions */
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: var(--sas-radius);
+  border-width: 1px;
+  border-left-width: 3px;
+  box-shadow: none;
+  font-size: 0.76rem;
+}
+
+.md-typeset .admonition-title,
+.md-typeset summary {
+  font-weight: 650;
+  letter-spacing: 0.002em;
+}
+
+/* Definition lists — used by the glossary */
+.md-typeset dl dt {
+  font-weight: 650;
+  color: var(--md-default-fg-color);
+  margin-top: 0.9em;
+}
+
+.md-typeset dl dd {
+  margin-top: 0.2em;
+  margin-bottom: 0.9em;
+  padding-left: 1.1em;
+  border-left: 2px solid var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset dl dd p {
+  margin-top: 0.2em;
+}
+
+/* Blockquotes */
+.md-typeset blockquote {
+  border-left: 3px solid var(--sas-cyan-600);
+  color: var(--md-default-fg-color--light);
+  background: var(--md-default-bg-color--light);
+  border-radius: 0 var(--sas-radius) var(--sas-radius) 0;
+  padding: 0.5em 1em;
+}
+
+/* --------------------------------------------------------------------------
+   5. Components
+   -------------------------------------------------------------------------- */
+
+/* --- Hero ---------------------------------------------------------------- */
+
+/* A flat navy panel with one cyan rule. No gradients: the identity comes from
+   the navy/cyan pairing and the typography scale, not from lighting effects. */
+.sas-hero {
+  position: relative;
+  margin: 0 0 2.2rem;
+  padding: 2.5rem 2rem 2rem;
+  border: var(--sas-border);
+  border-top: 3px solid var(--sas-cyan-400);
+  border-radius: var(--sas-radius-lg);
+  background: #0a1a2e;
+  overflow: hidden;
+}
+
+.sas-hero__eyebrow {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--sas-cyan-300);
+  margin-bottom: 0.7rem;
+}
+
+/* The hero title is a real <h1>, so `.md-typeset h1` would otherwise win on
+   font size and colour. The extra specificity keeps the hero identity. */
+.md-typeset h1.sas-hero__title,
+.sas-hero__title {
+  font-size: clamp(2rem, 6vw, 3.1rem);
+  line-height: 1.04;
+  font-weight: 750;
+  letter-spacing: -0.035em;
+  color: #f2f7fd;
+  margin: 0 0 0.5rem;
+}
+
+.sas-hero__subtitle {
+  font-size: clamp(0.9rem, 2.2vw, 1.1rem);
+  font-weight: 500;
+  color: #a9bbd0;
+  margin: 0 0 1.1rem;
+  max-width: 46ch;
+}
+
+.sas-hero__lede {
+  font-size: 0.86rem;
+  line-height: 1.7;
+  color: #c9d8e8;
+  max-width: 62ch;
+  margin: 0 0 1.5rem;
+}
+
+.md-typeset .md-button + .md-button {
+  margin-left: 0.4rem;
+}
+
+/* Material's default (non-primary) button inherits `--md-primary-fg-color`,
+   which in this palette is navy. On a dark page that is navy text on navy
+   background: measured contrast 1.1:1. Buttons get explicit tokens instead. */
+.md-typeset .md-button {
+  border: 1px solid var(--sas-cyan-700);
+  border-radius: var(--sas-radius);
+  color: var(--sas-cyan-300);
+  background: transparent;
+  font-weight: 620;
+  font-size: 0.74rem;
+  padding: 0.55rem 1.1rem;
+  text-decoration: none;
+}
+
+.md-typeset .md-button:hover,
+.md-typeset .md-button:focus-visible {
+  border-color: var(--sas-cyan-400);
+  background: rgba(34, 211, 238, 0.12);
+  color: var(--sas-cyan-300);
+  text-decoration: none;
+}
+
+.md-typeset .md-button--primary {
+  background: var(--sas-cyan-400);
+  border-color: var(--sas-cyan-400);
+  color: #04121e;
+}
+
+.md-typeset .md-button--primary:hover,
+.md-typeset .md-button--primary:focus-visible {
+  background: var(--sas-cyan-300);
+  border-color: var(--sas-cyan-300);
+  color: #04121e;
+}
+
+[data-md-color-scheme="default"] .md-typeset .md-button {
+  border-color: var(--sas-cyan-700);
+  color: var(--sas-cyan-700);
+}
+
+[data-md-color-scheme="default"] .md-typeset .md-button:hover,
+[data-md-color-scheme="default"] .md-typeset .md-button:focus-visible {
+  background: rgba(14, 116, 144, 0.1);
+  color: #073b47;
+}
+
+[data-md-color-scheme="default"] .md-typeset .md-button--primary {
+  background: var(--sas-cyan-700);
+  border-color: var(--sas-cyan-700);
+  color: #ffffff;
+}
+
+[data-md-color-scheme="default"] .md-typeset .md-button--primary:hover,
+[data-md-color-scheme="default"] .md-typeset .md-button--primary:focus-visible {
+  background: #0b5c72;
+  border-color: #0b5c72;
+  color: #ffffff;
+}
+
+.sas-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 0.4rem;
+}
+
+.sas-hero .md-button {
+  margin: 0;
+}
+
+.sas-hero .md-button--primary {
+  background-color: var(--sas-cyan-400);
+  border-color: var(--sas-cyan-400);
+  color: #04121d;
+  font-weight: 650;
+}
+
+.sas-hero .md-button--primary:hover,
+.sas-hero .md-button--primary:focus {
+  background-color: var(--sas-cyan-300);
+  border-color: var(--sas-cyan-300);
+  color: #04121d;
+}
+
+.sas-hero .md-button:not(.md-button--primary) {
+  border-color: rgba(103, 232, 249, 0.5);
+  color: #d7f4fb;
+  font-weight: 550;
+}
+
+.sas-hero .md-button:not(.md-button--primary):hover,
+.sas-hero .md-button:not(.md-button--primary):focus {
+  background-color: rgba(34, 211, 238, 0.14);
+  border-color: var(--sas-cyan-300);
+  color: #ffffff;
+}
+
+.sas-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  margin-top: 1.6rem;
+  padding-top: 1.1rem;
+  border-top: 1px solid rgba(230, 237, 246, 0.14);
+  font-size: 0.66rem;
+  color: #9db1c8;
+}
+
+.sas-hero__meta strong {
+  color: #cfe0f0;
+  font-weight: 650;
+  margin-right: 0.3rem;
+}
+
+/* In light mode the hero keeps its dark identity; it is an intentional
+   contrast panel rather than a scheme-dependent surface. */
+
+/* --- Stats --------------------------------------------------------------- */
+
+.sas-stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin: 0 0 2.2rem;
+}
+
+.sas-stat {
+  border: var(--sas-border);
+  border-radius: var(--sas-radius);
+  background: var(--md-default-bg-color--light);
+  padding: 1rem 0.9rem;
+}
+
+.sas-stat__value {
+  font-size: 1.5rem;
+  font-weight: 720;
+  letter-spacing: -0.03em;
+  color: var(--sas-cyan-400);
+  line-height: 1.1;
+}
+
+[data-md-color-scheme="default"] .sas-stat__value {
+  color: var(--sas-cyan-700);
+}
+
+.sas-stat__label {
+  font-size: 0.64rem;
+  line-height: 1.45;
+  color: var(--md-default-fg-color--light);
+  margin-top: 0.35rem;
+}
+
+/* --- Grid and cards ------------------------------------------------------ */
+
+.sas-grid {
+  display: grid;
+  gap: 0.9rem;
+  margin: 1.2rem 0 2rem;
+}
+
+.sas-grid--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.sas-grid--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.sas-grid--5 {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.sas-card {
+  border: var(--sas-border);
+  border-radius: var(--sas-radius);
+  background: var(--md-default-bg-color--light);
+  padding: 1.05rem 1.1rem;
+  font-size: 0.72rem;
+  line-height: 1.62;
+  color: var(--md-default-fg-color--light);
+  transition: border-color 120ms ease, transform 120ms ease;
+}
+
+.sas-card:hover {
+  border-color: var(--sas-cyan-700);
+}
+
+.sas-card > *:first-child {
+  margin-top: 0;
+}
+
+.sas-card > *:last-child {
+  margin-bottom: 0;
+}
+
+.sas-card p {
+  margin: 0.5em 0;
+}
+
+.sas-card__title {
+  font-size: 0.78rem;
+  font-weight: 680;
+  letter-spacing: -0.01em;
+  color: var(--md-default-fg-color);
+  margin-bottom: 0.45rem;
+}
+
+.sas-card__icon {
+  font-size: 1.15rem;
+  line-height: 1;
+  margin-bottom: 0.55rem;
+}
+
+.sas-card__kicker {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sas-cyan-400);
+  margin-bottom: 0.3rem;
+}
+
+[data-md-color-scheme="default"] .sas-card__kicker {
+  color: var(--sas-cyan-700);
+}
+
+.sas-card__step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.55rem;
+  height: 1.55rem;
+  border-radius: 50%;
+  border: 1px solid var(--sas-cyan-700);
+  color: var(--sas-cyan-300);
+  font-size: 0.7rem;
+  font-weight: 700;
+  margin-bottom: 0.55rem;
+}
+
+[data-md-color-scheme="default"] .sas-card__step {
+  color: var(--sas-cyan-700);
+}
+
+.sas-card--plain {
+  background: transparent;
+}
+
+.sas-card--step {
+  border-left: 2px solid var(--sas-cyan-700);
+}
+
+.sas-card--part .sas-card__title {
+  margin-bottom: 0.3rem;
+}
+
+.sas-card__link {
+  display: block;
+  margin-top: 0.3rem;
+}
+
+/* --- Badges -------------------------------------------------------------- */
+
+.sas-badge {
+  display: inline-block;
+  padding: 0.14em 0.5em;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  line-height: 1.5;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+a.sas-badge:hover {
+  text-decoration: none;
+  filter: brightness(1.15);
+}
+
+.sas-badge--complete {
+  color: var(--sas-ok);
+}
+
+.sas-badge--review {
+  color: var(--sas-info);
+}
+
+.sas-badge--draft {
+  color: var(--sas-warn);
+}
+
+.sas-badge--planned {
+  color: var(--md-default-fg-color--lighter);
+}
+
+.sas-badge--danger {
+  color: var(--sas-danger);
+}
+
+.sas-badge--warn {
+  color: var(--sas-warn);
+}
+
+.sas-badge--ok {
+  color: var(--sas-ok);
+}
+
+/* --- Module header strip ------------------------------------------------- */
+
+.sas-module-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.85rem;
+  margin: 0.2rem 0 1.4rem;
+  padding: 0.7rem 0.9rem;
+  border: var(--sas-border);
+  border-radius: var(--sas-radius);
+  background: var(--md-default-bg-color--light);
+  font-size: 0.64rem;
+  color: var(--md-default-fg-color--light);
+}
+
+/* Markdown content inside the strip is wrapped in a paragraph by md_in_html,
+   so the paragraph — not the container — carries the flex layout. */
+.sas-module-head > p {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.85rem;
+  margin: 0;
+  max-width: none;
+}
+
+.sas-meta {
+  white-space: nowrap;
+}
+
+.sas-meta + .sas-meta::before {
+  content: "·";
+  margin-right: 0.85rem;
+  color: var(--md-default-fg-color--lightest);
+}
+
+/* --- Progress ------------------------------------------------------------ */
+
+.sas-progress {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem 0.9rem;
+  margin: 0 0 1.8rem;
+  padding: 0.8rem 0.95rem;
+  border: 1px dashed var(--md-default-fg-color--lightest);
+  border-radius: var(--sas-radius);
+  font-size: 0.66rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.sas-progress__label {
+  font-weight: 650;
+  color: var(--md-default-fg-color);
+}
+
+.sas-progress__btn {
+  appearance: none;
+  cursor: pointer;
+  border: 1px solid var(--sas-cyan-700);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--sas-cyan-300);
+  padding: 0.34rem 0.9rem;
+  font-family: inherit;
+  font-size: 0.66rem;
+  font-weight: 620;
+  transition: background-color 120ms ease, border-color 120ms ease;
+}
+
+[data-md-color-scheme="default"] .sas-progress__btn {
+  color: var(--sas-cyan-700);
+}
+
+.sas-progress__btn:hover {
+  background: rgba(34, 211, 238, 0.12);
+  border-color: var(--sas-cyan-400);
+}
+
+.sas-progress__btn[aria-pressed="true"] {
+  background: rgba(52, 211, 153, 0.14);
+  border-color: var(--sas-ok);
+  color: var(--sas-ok);
+}
+
+.sas-progress__btn--ghost {
+  border-color: var(--md-default-fg-color--lightest);
+  color: var(--md-default-fg-color--light);
+  margin-top: 0.6rem;
+}
+
+.sas-progress__state {
+  font-variant-numeric: tabular-nums;
+}
+
+.sas-progress__state.is-complete {
+  color: var(--sas-ok);
+  font-weight: 600;
+}
+
+.sas-progress__note {
+  flex-basis: 100%;
+  font-size: 0.62rem;
+  color: var(--sas-warn);
+}
+
+/* Overview (roadmap) */
+.sas-overview {
+  border: var(--sas-border);
+  border-radius: var(--sas-radius);
+  background: var(--md-default-bg-color--light);
+  padding: 1rem 1.1rem 1.15rem;
+  margin: 1rem 0 2rem;
+  font-size: 0.68rem;
+}
+
+.sas-overview__heading {
+  font-weight: 650;
+  color: var(--md-default-fg-color);
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.005em;
+}
+
+.sas-overview__row {
+  display: grid;
+  grid-template-columns: minmax(9rem, 1.1fr) minmax(6rem, 3fr) auto;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.32rem 0;
+}
+
+.sas-overview__name {
+  color: var(--md-default-fg-color--light);
+}
+
+.sas-overview__numbers {
+  font-variant-numeric: tabular-nums;
+  font-weight: 620;
+  color: var(--md-default-fg-color);
+  white-space: nowrap;
+}
+
+.sas-progressbar {
+  height: 0.42rem;
+  border-radius: 999px;
+  background: var(--md-default-bg-color--lighter);
+  overflow: hidden;
+}
+
+.sas-progressbar__fill {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--sas-cyan-700), var(--sas-cyan-400));
+  transition: width 220ms ease;
+}
+
+.sas-overview__summary {
+  margin-top: 0.8rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--md-default-fg-color--lightest);
+  font-weight: 620;
+  color: var(--md-default-fg-color);
+}
+
+.sas-noscript {
+  border-left: 3px solid var(--sas-warn);
+  padding-left: 0.8rem;
+  color: var(--md-default-fg-color--light);
+}
+
+/* --- Module overview card ------------------------------------------------ */
+
+.sas-module-card {
+  margin: 0.2rem 0 1.6rem;
+  border: var(--sas-border);
+  border-radius: var(--sas-radius);
+  background: var(--md-default-bg-color--light);
+  overflow: hidden;
+}
+
+.sas-module-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 0.7rem;
+  padding: 0.7rem 0.95rem;
+  border-bottom: 1px solid var(--md-default-fg-color--lightest);
+}
+
+.sas-module-card__kicker {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--sas-cyan-300);
+}
+
+.sas-module-card__level {
+  font-size: 0.64rem;
+  color: var(--md-default-fg-color--light);
+}
+
+[data-md-color-scheme="default"] .sas-module-card__kicker {
+  color: var(--sas-cyan-700);
+}
+
+.md-typeset ul.sas-module-card__facts:not([hidden]) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: 0.35rem 0.9rem;
+  list-style: none;
+  margin: 0;
+  padding: 0.75rem 0.95rem;
+  font-size: 0.66rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .sas-module-card__facts > li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.md-typeset .sas-module-card__facts > li::marker {
+  content: "";
+}
+
+.sas-module-card__facts strong {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 650;
+  color: var(--md-default-fg-color);
+}
+
+.sas-module-card__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  padding: 0.7rem 0.95rem;
+  border-top: 1px dashed var(--md-default-fg-color--lightest);
+}
+
+.sas-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.2rem;
+  padding: 0.1rem 0.7rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-radius: 999px;
+  font-size: 0.64rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--md-default-fg-color--light);
+  text-decoration: none;
+}
+
+.sas-chip:hover,
+.sas-chip:focus-visible {
+  border-color: var(--sas-cyan-600);
+  color: var(--md-default-fg-color);
+  background: rgba(34, 211, 238, 0.1);
+  text-decoration: none;
+}
+
+.sas-chip--primary {
+  border-color: var(--sas-cyan-700);
+  color: var(--sas-cyan-300);
+}
+
+[data-md-color-scheme="default"] .sas-chip--primary {
+  color: var(--sas-cyan-700);
+}
+
+/* --- Learning objectives panel ------------------------------------------ */
+
+.md-typeset h2#learning-objectives + p {
+  font-size: 0.66rem;
+  font-weight: 650;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--md-default-fg-color--lighter);
+}
+
+.md-typeset h2#learning-objectives + p + ol {
+  margin: 0.6rem 0 1.6rem;
+  padding: 0.95rem 1.1rem 0.95rem 2.4rem;
+  border: 1px solid var(--md-default-fg-color--lightest);
+  border-left: 3px solid var(--sas-cyan-600);
+  border-radius: 0 var(--sas-radius) var(--sas-radius) 0;
+  background: var(--md-default-bg-color--light);
+  font-size: 0.78rem;
+  max-width: none;
+}
+
+.md-typeset h2#learning-objectives + p + ol li {
+  margin: 0.35em 0;
+}
+
+.md-typeset h2#learning-objectives + p + ol li::marker {
+  color: var(--sas-cyan-600);
+  font-weight: 650;
+}
+
+/* --- Lesson navigation (previous / next) -------------------------------- */
+
+.sas-lesson-nav {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.7rem;
+  margin: 2.2rem 0 1rem;
+}
+
+.sas-lesson-nav__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.8rem 0.95rem;
+  border: var(--sas-border);
+  border-radius: var(--sas-radius);
+  background: var(--md-default-bg-color--light);
+  text-decoration: none;
+}
+
+.sas-lesson-nav__link--next {
+  text-align: right;
+  align-items: flex-end;
+}
+
+.sas-lesson-nav__dir {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--sas-cyan-300);
+}
+
+[data-md-color-scheme="default"] .sas-lesson-nav__dir {
+  color: var(--sas-cyan-700);
+}
+
+.sas-lesson-nav__title {
+  font-size: 0.74rem;
+  font-weight: 650;
+  color: var(--md-default-fg-color);
+}
+
+.sas-lesson-nav__link:hover,
+.sas-lesson-nav__link:focus-visible {
+  border-color: var(--sas-cyan-600);
+  text-decoration: none;
+}
+
+.sas-related {
+  margin: -0.2rem 0 1.6rem;
+  font-size: 0.68rem;
+  color: var(--md-default-fg-color--light);
+}
+
+/* --- Homepage: level cards, instructor, tools ---------------------------- */
+
+.sas-level {
+  border: var(--sas-border);
+  border-radius: var(--sas-radius);
+  background: var(--md-default-bg-color--light);
+  padding: 1rem 1.05rem 1.1rem;
+  font-size: 0.7rem;
+}
+
+.sas-level__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.6rem;
+}
+
+.sas-level__title {
+  font-size: 0.8rem;
+  font-weight: 680;
+  letter-spacing: -0.01em;
+  color: var(--md-default-fg-color);
+  margin: 0;
+}
+
+.sas-level__hours {
+  font-size: 0.6rem;
+  font-weight: 650;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sas-cyan-300);
+  white-space: nowrap;
+}
+
+[data-md-color-scheme="default"] .sas-level__hours {
+  color: var(--sas-cyan-700);
+}
+
+.sas-level__note {
+  margin: 0.35rem 0 0.55rem;
+  color: var(--md-default-fg-color--light);
+}
+
+.sas-level__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sas-level__list li {
+  display: flex;
+  gap: 0.55rem;
+  padding: 0.26rem 0;
+  border-top: 1px dashed var(--md-default-fg-color--lightest);
+  margin: 0;
+}
+
+.sas-level__num {
+  font-variant-numeric: tabular-nums;
+  font-weight: 650;
+  color: var(--md-default-fg-color--lighter);
+}
+
+.sas-level__list a {
+  color: var(--md-typeset-a-color);
+}
+
+.sas-level__list a:hover,
+.sas-level__list a:focus-visible {
+  color: var(--md-default-fg-color);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.sas-instructor {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  margin: 1.2rem 0 2rem;
+  padding: 1.1rem 1.2rem;
+  border: var(--sas-border);
+  border-radius: var(--sas-radius);
+  background: var(--md-default-bg-color--light);
+}
+
+.sas-instructor__mark {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 2.9rem;
+  height: 2.9rem;
+  border: 1px solid var(--sas-cyan-700);
+  border-radius: 50%;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--sas-cyan-300);
+}
+
+[data-md-color-scheme="default"] .sas-instructor__mark {
+  color: var(--sas-cyan-700);
+}
+
+.sas-instructor__body {
+  font-size: 0.72rem;
+  line-height: 1.6;
+  color: var(--md-default-fg-color--light);
+}
+
+.sas-instructor__body p {
+  margin: 0.2rem 0;
+  max-width: 62ch;
+}
+
+.sas-instructor__name {
+  font-size: 0.78rem;
+  font-weight: 680;
+  color: var(--md-default-fg-color);
+}
+
+.sas-section-lede {
+  max-width: 66ch;
+  color: var(--md-default-fg-color--light);
+}
+
+/* --------------------------------------------------------------------------
+   6. Footer
+   -------------------------------------------------------------------------- */
+
+.sas-footer.md-copyright {
+  width: 100%;
+  padding: 1.8rem 0.8rem 1.6rem;
+  font-size: 0.64rem;
+  line-height: 1.65;
+}
+
+.sas-footer .sas-footer__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.4rem;
+  max-width: var(--sas-max);
+  margin: 0 auto;
+}
+
+.sas-footer__heading {
+  font-weight: 700;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--sas-cyan-300);
+  margin-bottom: 0.4rem;
+}
+
+.sas-footer__text {
+  color: var(--md-footer-fg-color--light);
+}
+
+.sas-footer__text a {
+  color: var(--md-footer-fg-color);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.sas-footer__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.5rem;
+  max-width: var(--sas-max);
+  margin: 1.5rem auto 0;
+  padding-top: 1rem;
+  border-top: 1px solid rgba(230, 237, 246, 0.16);
+  color: var(--md-footer-fg-color--lighter);
+  font-size: 0.6rem;
+}
+
+.sas-footer__sep {
+  opacity: 0.6;
+}
+
+/* --------------------------------------------------------------------------
+   7. Accessibility and motion
+   -------------------------------------------------------------------------- */
+
+/* Status colours are tuned per scheme: amber on a light page is unreadable,
+   so light mode uses the darker end of each hue. */
+[data-md-color-scheme="default"] .sas-badge--draft,
+[data-md-color-scheme="default"] .sas-badge--warn {
+  color: #8a4b00;
+}
+
+[data-md-color-scheme="default"] .sas-badge--complete,
+[data-md-color-scheme="default"] .sas-badge--ok {
+  color: #046c4e;
+}
+
+[data-md-color-scheme="default"] .sas-badge--review {
+  color: #1d4ed8;
+}
+
+[data-md-color-scheme="default"] .sas-badge--danger {
+  color: #b3261e;
+}
+
+:focus-visible {
+  outline: 2px solid var(--sas-cyan-400);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+[data-md-color-scheme="default"] :focus-visible {
+  outline-color: var(--sas-cyan-700);
+}
+
+.md-skip {
+  color: var(--md-default-bg-color);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   8. Responsive and print
+   -------------------------------------------------------------------------- */
+
+@media screen and (max-width: 76.1875em) {
+  .sas-grid--5 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media screen and (max-width: 60em) {
+  .sas-grid--3,
+  .sas-grid--5 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sas-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sas-footer .sas-footer__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* Wide tables scroll inside their own box instead of forcing the page sideways. */
+.md-typeset .md-typeset__table,
+.md-typeset .md-typeset__scrollwrap {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.md-typeset > table {
+  max-width: 100%;
+}
+
+/* A wide table on a phone scrolls sideways inside its wrapper. Make that
+   scrollable area visible rather than leaving the cut-off column unexplained. */
+.md-typeset__scrollwrap {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sas-cyan-700) transparent;
+  padding-bottom: 0.2rem;
+}
+
+.md-typeset__scrollwrap::-webkit-scrollbar {
+  height: 6px;
+}
+
+.md-typeset__scrollwrap::-webkit-scrollbar-thumb {
+  background-color: var(--sas-cyan-700);
+  border-radius: 999px;
+}
+
+.md-typeset pre,
+.md-typeset .highlight {
+  max-width: 100%;
+}
+
+.md-typeset pre {
+  overflow-x: auto;
+}
+
+/* Below the wide breakpoint the page has no spare gutter, so a full-bleed
+   code block would touch the screen edge. Align code with the text there. */
+@media screen and (max-width: 76.24em) {
+  .md-typeset .highlight {
+    margin-inline: 0;
+  }
+}
+
+/* --- Mermaid diagrams ---------------------------------------------------- */
+
+.sas-diagram {
+  margin: 1.3rem 0;
+  padding: 0.9rem 0.6rem;
+  border: var(--sas-border);
+  border-radius: var(--sas-radius);
+  background: var(--md-default-bg-color--light);
+  overflow-x: auto;
+  text-align: center;
+}
+
+.sas-diagram svg {
+  max-width: 100%;
+  height: auto;
+  font-family: var(--sas-font-sans);
+}
+
+/* A flowchart scaled into a 320 px column has 6 px labels. Below the tablet
+   breakpoint the diagram keeps a legible width and the figure scrolls, which
+   is better than a diagram nobody can read. */
+@media screen and (max-width: 48em) {
+  .sas-diagram {
+    padding-inline: 0.2rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sas-cyan-700) transparent;
+  }
+
+  .sas-diagram svg {
+    min-width: 32rem;
+  }
+}
+
+/* If a diagram cannot be rendered, the source stays visible as a code block. */
+.md-typeset pre.sas-mermaid--failed {
+  border-left: 3px solid var(--sas-warn);
+}
+
+/* The header carries a long site name; on a phone it must not crowd the
+   drawer and search controls. */
+@media screen and (max-width: 30em) {
+  .md-header__title {
+    font-size: 0.78rem;
+  }
+}
+
+@media screen and (max-width: 44em) {
+  .md-typeset {
+    font-size: 0.78rem;
+  }
+
+  .md-typeset table:not([class]) {
+    font-size: 0.7rem;
+  }
+
+  .md-typeset table:not([class]) th {
+    white-space: normal;
+  }
+
+  .sas-lesson-nav {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sas-lesson-nav__link--next {
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .sas-module-card__facts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sas-instructor {
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .sas-hero {
+    padding: 1.8rem 1.15rem 1.5rem;
+  }
+
+  .sas-grid--2,
+  .sas-grid--3,
+  .sas-grid--5 {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sas-overview__row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    row-gap: 0.25rem;
+  }
+
+  .sas-overview__row .sas-progressbar {
+    grid-column: 1 / -1;
+    order: 3;
+  }
+
+  .sas-footer .sas-footer__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sas-module-head {
+    font-size: 0.62rem;
+  }
+
+  .md-typeset table:not([class]) {
+    font-size: 0.66rem;
+  }
+}
+
+@media print {
+  .md-header,
+  .md-tabs,
+  .md-sidebar,
+  .md-footer,
+  .sas-progress,
+  .md-top {
+    display: none !important;
+  }
+
+  .md-typeset {
+    font-size: 10pt;
+    color: #000;
+  }
+
+  .sas-hero,
+  .sas-card,
+  .sas-stat {
+    background: none !important;
+    border: 1px solid #999 !important;
+    color: #000 !important;
+  }
+
+  .sas-hero__title,
+  .sas-hero__subtitle,
+  .sas-hero__lede,
+  .sas-hero__eyebrow,
+  .sas-hero__meta,
+  .sas-card__title,
+  .sas-card__kicker,
+  .sas-stat__value {
+    color: #000 !important;
+  }
+}

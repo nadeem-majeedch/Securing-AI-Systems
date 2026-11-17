@@ -1,0 +1,84 @@
+{
+  "requests": [
+    {
+      "id": "q01",
+      "principal": "alice",
+      "tool": "read_file",
+      "resource": "doc:alpha:1",
+      "amount": 0,
+      "recipient_tenant": "alpha"
+    },
+    {
+      "id": "q02",
+      "principal": "alice",
+      "tool": "refund",
+      "resource": "doc:alpha:1",
+      "amount": 20,
+      "recipient_tenant": "alpha"
+    },
+    {
+      "id": "q03",
+      "principal": "bob",
+      "tool": "refund",
+      "resource": "doc:alpha:1",
+      "amount": 20,
+      "recipient_tenant": "alpha"
+    },
+    {
+      "id": "q04",
+      "principal": "bob",
+      "tool": "send_email",
+      "resource": "doc:alpha:1",
+      "amount": 0,
+      "recipient_tenant": "beta"
+    },
+    {
+      "id": "q05",
+      "principal": "carol",
+      "tool": "refund",
+      "resource": "doc:beta:9",
+      "amount": 20,
+      "recipient_tenant": "beta"
+    },
+    {
+      "id": "q06",
+      "principal": "carol",
+      "tool": "refund",
+      "resource": "doc:beta:9",
+      "amount": 900,
+      "recipient_tenant": "beta"
+    },
+    {
+      "id": "q07",
+      "principal": "alice",
+      "tool": "read_file",
+      "resource": "doc:beta:9",
+      "amount": 0,
+      "recipient_tenant": "alpha"
+    },
+    {
+      "id": "q08",
+      "principal": "carol",
+      "tool": "delete_file",
+      "resource": "doc:beta:9",
+      "amount": 0,
+      "recipient_tenant": "beta"
+    },
+    {
+      "id": "q09",
+      "principal": "bob",
+      "tool": "send_email",
+      "resource": "doc:alpha:2",
+      "amount": 0,
+      "recipient_tenant": "alpha"
+    },
+    {
+      "id": "q10",
+      "principal": "mallory",
+      "tool": "read_file",
+      "resource": "doc:alpha:1",
+      "amount": 0,
+      "recipient_tenant": "alpha"
+    }
+  ]
+}

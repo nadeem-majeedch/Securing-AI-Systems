@@ -1,0 +1,313 @@
+# Securing AI Systems — site configuration
+#
+# Build:  python -m mkdocs build --strict
+# Serve:  python -m mkdocs serve
+#
+# Publishing configuration (site_url, repo_url, deploy workflow) is deliberately
+# absent: the site is not yet authorised for publication. See DEPLOYMENT.md.
+
+site_name: Securing AI Systems
+site_description: >-
+  A practical self-study course on securing machine learning and generative AI
+  systems, for BS Data Science students.
+site_author: Engr. Dr. Muhammad Nadeem Majeed
+docs_dir: docs
+
+# Project site, not a user/root site: the published address is
+# https://nadeem-majeedch.github.io/Securing-AI-Systems/ so every URL, the
+# canonical tag, the sitemap and the `url` filter in templates carry this base
+# path. Changing the repository name, or moving to a custom domain, means
+# changing this one line and rebuilding. See DEPLOYMENT.md §3.
+site_url: https://nadeem-majeedch.github.io/Securing-AI-Systems/
+
+copyright: >-
+  Course content © Muhammad Nadeem Majeed · Department of Data Science (PUCIT),
+  University of the Punjab, Lahore
+
+# Instructor material is excluded from the build, not merely unlinked.
+exclude_docs: |
+  instructor/
+
+# The 404 page is authored as a static template (overrides/404.html) because
+# Material renders static templates without page content. It is not a docs page.
+
+# ---------------------------------------------------------------------------
+# Theme
+# ---------------------------------------------------------------------------
+theme:
+  name: material
+  custom_dir: overrides
+  language: en
+
+  # no Google Fonts request; the design system defines a system font stack
+  font: false
+
+  palette:
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.indexes
+    - navigation.top
+    - navigation.tracking
+    - navigation.footer
+    - navigation.instant
+    - navigation.instant.progress
+    - toc.follow
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+
+# ---------------------------------------------------------------------------
+# Markdown
+# ---------------------------------------------------------------------------
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: sas-mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight:
+      # Line-number anchors are empty <a href> elements: they add one unnamed
+      # tab stop per line of code for keyboard and screen-reader users, and
+      # nothing links to them in a course page. Line spans are kept for
+      # annotation and copy support.
+      anchor_linenums: false
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.keys
+  - pymdownx.caret
+  - pymdownx.tilde
+
+plugins:
+  - search
+
+# ---------------------------------------------------------------------------
+# Assets
+# ---------------------------------------------------------------------------
+extra_css:
+  - assets/stylesheets/extra.css
+  - assets/stylesheets/quiz.css
+
+extra_javascript:
+  - assets/javascript/progress.js
+  - assets/javascript/diagrams.js
+
+# ---------------------------------------------------------------------------
+# Navigation
+# ---------------------------------------------------------------------------
+nav:
+- Home: index.md
+- Start Here:
+  - getting-started/index.md
+  - How to Use This Course: getting-started/how-to-use.md
+  - Prerequisites: getting-started/prerequisites.md
+  - Learning Environment: getting-started/environment.md
+  - Study Plans: getting-started/study-plans.md
+  - Assessment: getting-started/assessment.md
+  - Academic Integrity and Responsible Use: getting-started/academic-integrity.md
+  - Privacy: getting-started/privacy.md
+- Roadmap: roadmap.md
+- Modules:
+  - modules/index.md
+  - Level 1 — Foundation:
+    - 01 · Introduction to Securing AI Systems: modules/01-introduction.md
+    - 02 · Fundamentals of AI, ML and Deep Learning Security: modules/02-ml-security-fundamentals.md
+    - 03 · Cybersecurity Fundamentals for AI Systems: modules/03-cybersecurity-fundamentals.md
+    - 04 · AI Threat Modeling and Risk Assessment: modules/04-threat-modeling.md
+    - 05 · Secure Data Management and Dataset Protection: modules/05-secure-data-management.md
+  - Level 2 — Intermediate:
+    - 06 · Adversarial Machine Learning: modules/06-adversarial-ml.md
+    - 07 · Data Poisoning and Backdoor Attacks: modules/07-data-poisoning.md
+    - 08 · Model Evasion and Robustness: modules/08-evasion-and-robustness.md
+    - '09 · Model Privacy: Membership Inference and Model Inversion': modules/09-model-privacy.md
+    - 10 · Model Extraction and Intellectual Property Protection: modules/10-model-extraction.md
+  - Level 3 — Advanced:
+    - 11 · Fundamentals of LLM Security: modules/11-llm-security.md
+    - 12 · Prompt Injection and Jailbreak Attacks: modules/12-prompt-injection.md
+    - 13 · RAG Security and Knowledge Base Protection: modules/13-rag-security.md
+    - 14 · AI Agent Security and Tool Abuse: modules/14-agent-security.md
+    - 15 · Secure Fine-Tuning and Model Supply Chain: modules/15-fine-tuning-supply-chain.md
+  - Level 4 — Professional Practice:
+    - 16 · Secure AI APIs and Application Development: modules/16-secure-ai-apis.md
+    - 17 · AI Red Teaming and Security Testing: modules/17-red-teaming.md
+    - 18 · AI System Monitoring, Incident Response and Recovery: modules/18-monitoring-and-response.md
+    - 19 · AI Governance, Privacy, Ethics and Compliance: modules/19-governance-and-ethics.md
+    - 20 · Secure AI Deployment and Capstone Projects: modules/20-deployment-and-capstone.md
+- Labs: labs/index.md
+- Assess:
+  - Assignments:
+    - assignments/index.md
+    - A1 · Threat model for a hospital AI application: assignments/a01-threat-model-hospital.md
+    - A2 · Securing a fraud detection pipeline: assignments/a02-fraud-pipeline.md
+    - A3 · Identifying poisoning in a synthetic dataset: assignments/a03-poisoning-investigation.md
+    - A4 · Evaluating adversarial robustness: assignments/a04-robustness-evaluation.md
+    - A5 · Assessing model privacy risks: assignments/a05-privacy-assessment.md
+    - A6 · Evaluating model extraction risk: assignments/a06-extraction-assessment.md
+    - A7 · Securing an LLM chatbot: assignments/a07-chatbot-security.md
+    - A8 · Securing a RAG application: assignments/a08-rag-security.md
+    - A9 · Designing an agent authorisation framework: assignments/a09-agent-authorisation.md
+    - A10 · AI supply chain security assessment: assignments/a10-supply-chain.md
+    - A11 · AI application security audit: assignments/a11-security-audit.md
+    - A12 · Production AI security monitoring system: assignments/a12-monitoring-system.md
+  - Quizzes and assessments:
+    - quizzes/index.md
+    - Self-assessment guide: quizzes/self-assessment.md
+    - Practice quizzes:
+      - 01 · Introduction to Securing AI Systems: quizzes/m01.md
+      - 02 · Fundamentals of AI, ML and Deep Learning Security: quizzes/m02.md
+      - 03 · Cybersecurity Fundamentals for AI Systems: quizzes/m03.md
+      - 04 · AI Threat Modeling and Risk Assessment: quizzes/m04.md
+      - 05 · Secure Data Management and Dataset Protection: quizzes/m05.md
+      - 06 · Adversarial Machine Learning: quizzes/m06.md
+      - 07 · Data Poisoning and Backdoor Attacks: quizzes/m07.md
+      - 08 · Model Evasion and Robustness: quizzes/m08.md
+      - '09 · Model Privacy: Membership Inference and Model Inversion': quizzes/m09.md
+      - 10 · Model Extraction and IP Protection: quizzes/m10.md
+      - 11 · Fundamentals of LLM Security: quizzes/m11.md
+      - 12 · Prompt Injection and Jailbreak Attacks: quizzes/m12.md
+      - 13 · RAG Security and Knowledge Base Protection: quizzes/m13.md
+      - 14 · AI Agent Security and Tool Abuse: quizzes/m14.md
+      - 15 · Secure Fine-Tuning and Model Supply Chain: quizzes/m15.md
+      - 16 · Secure AI APIs and Application Development: quizzes/m16.md
+      - 17 · AI Red Teaming and Security Testing: quizzes/m17.md
+      - 18 · Monitoring, Incident Response and Recovery: quizzes/m18.md
+      - 19 · AI Governance, Privacy, Ethics and Compliance: quizzes/m19.md
+      - 20 · Secure AI Deployment and Capstone: quizzes/m20.md
+    - End-of-level assessments:
+      - Level 1 — Foundation: quizzes/level-1.md
+      - Level 2 — Intermediate: quizzes/level-2.md
+      - Level 3 — Advanced: quizzes/level-3.md
+      - Level 4 — Professional practice: quizzes/level-4.md
+    - Final assessment: quizzes/final.md
+    - Coverage report: quizzes/coverage.md
+    - Answer keys:
+      - How to use the keys: quizzes/answers/index.md
+      - Module 01: quizzes/answers/m01.md
+      - Module 02: quizzes/answers/m02.md
+      - Module 03: quizzes/answers/m03.md
+      - Module 04: quizzes/answers/m04.md
+      - Module 05: quizzes/answers/m05.md
+      - Module 06: quizzes/answers/m06.md
+      - Module 07: quizzes/answers/m07.md
+      - Module 08: quizzes/answers/m08.md
+      - Module 09: quizzes/answers/m09.md
+      - Module 10: quizzes/answers/m10.md
+      - Module 11: quizzes/answers/m11.md
+      - Module 12: quizzes/answers/m12.md
+      - Module 13: quizzes/answers/m13.md
+      - Module 14: quizzes/answers/m14.md
+      - Module 15: quizzes/answers/m15.md
+      - Module 16: quizzes/answers/m16.md
+      - Module 17: quizzes/answers/m17.md
+      - Module 18: quizzes/answers/m18.md
+      - Module 19: quizzes/answers/m19.md
+      - Module 20: quizzes/answers/m20.md
+      - Level 1: quizzes/answers/level-1.md
+      - Level 2: quizzes/answers/level-2.md
+      - Level 3: quizzes/answers/level-3.md
+      - Level 4: quizzes/answers/level-4.md
+      - Final: quizzes/answers/final.md
+- Projects:
+  - projects/index.md
+  - Mini projects:
+    - projects/mini/index.md
+    - MP01 · Dataset integrity verification tool: projects/mini/mp01-dataset-integrity.md
+    - MP02 · Adversarial robustness evaluation tool: projects/mini/mp02-robustness-evaluation.md
+    - MP03 · Poisoning detection prototype: projects/mini/mp03-poisoning-detection.md
+    - MP04 · Model privacy risk assessment: projects/mini/mp04-privacy-risk.md
+    - MP05 · Secure ML inference API: projects/mini/mp05-secure-inference-api.md
+    - MP06 · Prompt injection detection demonstration: projects/mini/mp06-injection-detection.md
+    - MP07 · RAG access-control validator: projects/mini/mp07-rag-access-control.md
+    - MP08 · Agent tool authorisation prototype: projects/mini/mp08-agent-authorisation.md
+    - MP09 · Supply chain integrity checker: projects/mini/mp09-supply-chain-checker.md
+    - MP10 · Monitoring dashboard: projects/mini/mp10-monitoring-dashboard.md
+  - Major projects:
+    - projects/major/index.md
+    - P1 · Secure ML pipeline: projects/major/p01-secure-ml-pipeline.md
+    - P2 · Healthcare AI application: projects/major/p02-healthcare-ai.md
+    - P3 · Secure LLM chatbot: projects/major/p03-llm-chatbot.md
+    - P4 · Secure RAG assistant: projects/major/p04-rag-assistant.md
+    - P5 · Agent sandboxing and permissions: projects/major/p05-agent-sandbox.md
+    - P6 · Red teaming framework: projects/major/p06-red-team-framework.md
+  - Project guidance:
+    - Project workflow: projects/guidance/workflow.md
+    - Milestones and checkpoints: projects/guidance/milestones.md
+    - Starter templates: projects/guidance/starter-templates.md
+    - Project rubrics: projects/guidance/rubrics.md
+  - Capstone:
+    - capstone/index.md
+    - Capstone proposals:
+      - capstone/proposals/index.md
+      - C1 · TriageAssist — clinical triage: capstone/proposals/c01-clinical-triage.md
+      - C2 · CreditGuard — credit decisioning: capstone/proposals/c02-credit-poisoning.md
+      - C3 · Campus Assistant — tenancy and tools: capstone/proposals/c03-campus-assistant.md
+      - C4 · Benefits Guide — eligibility support: capstone/proposals/c04-benefits-assistant.md
+      - C5 · OfflineOps — air-gapped copilot: capstone/proposals/c05-offline-ops-copilot.md
+- Reference:
+  - Frameworks:
+    - frameworks/index.md
+    - OWASP Top 10 for LLM Applications: frameworks/owasp.md
+    - MITRE ATLAS: frameworks/mitre-atlas.md
+    - NIST AI Risk Management Framework: frameworks/nist-ai-rmf.md
+    - NIST Cybersecurity Framework 2.0: frameworks/nist-csf.md
+    - NIST adversarial ML taxonomy: frameworks/nist-aml.md
+    - ISO/IEC AI and security standards: frameworks/iso.md
+    - Secure software development (SSDF): frameworks/ssdlc.md
+  - Research:
+    - research/index.md
+    - Adversarial ML, poisoning and backdoors: research/adversarial-ml.md
+    - Privacy and extraction: research/privacy.md
+    - Prompt injection, RAG and agents: research/llm-and-agents.md
+    - Supply chain and runtime monitoring: research/operations.md
+  - Case studies:
+    - case-studies/index.md
+    - C01 · Bing prompt extraction: case-studies/c01-bing-prompt-extraction.md
+    - C02 · ChatGPT cross-user exposure: case-studies/c02-chatgpt-redis.md
+    - C03 · torchtriton dependency confusion: case-studies/c03-torchtriton-dependency-confusion.md
+    - C04 · ShadowRay: case-studies/c04-shadowray-ray.md
+    - C05 · Malicious models on a public hub: case-studies/c05-huggingface-pickle.md
+    - C06 · EchoLeak: case-studies/c06-echoleak-copilot.md
+    - C07 · CamoLeak: case-studies/c07-camoleak-copilot-chat.md
+    - C08 · Exposed DeepSeek database: case-studies/c08-deepseek-database.md
+    - C09 · Amazon Q extension compromise: case-studies/c09-amazon-q-supply-chain.md
+    - C10 · Air Canada chatbot liability: case-studies/c10-air-canada-chatbot.md
+    - Hypothetical scenarios: case-studies/hypothetical.md
+  - Glossary: glossary.md
+  - Credits and attribution: attribution.md
+  - References: references.md

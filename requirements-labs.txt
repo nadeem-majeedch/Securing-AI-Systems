@@ -1,0 +1,62 @@
+# Student laboratory environment.
+#
+# Every direct dependency is pinned to the version this course was validated
+# against. Do not widen a pin without re-running every laboratory and every
+# notebook: the labs quote exact numbers (AUC 0.875, robust accuracy 0.063,
+# adversarial success rates), and a library change can move the third decimal.
+#
+# Validated on: Python 3.14.7, Windows 11, four-core CPU, no GPU, no network.
+# Also resolvable on Python 3.12. All 32 lab solutions and all 34 notebooks
+# were executed end to end against exactly these versions.
+#
+# Install inside a virtual environment:
+#
+#   python -m venv .venv
+#   # activate, then
+#   python -m pip install --upgrade pip
+#   python -m pip install -r requirements-labs.txt
+#   python scripts/check_env.py
+#
+# PyTorch: the pin below resolves to the platform-appropriate wheel from PyPI.
+# For an explicitly CPU-only install, use the official index first:
+#
+#   python -m pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu
+#
+# Unused-by-design: this file contains only libraries that a laboratory, a
+# notebook, or the documented student workflow actually imports. torchvision,
+# adversarial-robustness-toolbox, opacus, transformers and datasets were
+# removed in the Phase 14 audit: no lab or notebook imports them, and every
+# technique they would provide is implemented in the course's own code.
+
+# --- Core data science -------------------------------------------------------
+numpy==2.5.3
+pandas==3.0.6
+scikit-learn==1.9.1
+matplotlib==3.11.2
+scipy==1.18.1
+
+# --- Deep learning -----------------------------------------------------------
+torch==2.14.1
+
+# --- Artefact formats --------------------------------------------------------
+# Used by Module 15 and Lab 24 to contrast a data-only tensor format with
+# formats that can execute code on load.
+safetensors==0.8.0
+
+# --- Notebook interface ------------------------------------------------------
+# jupyterlab is the documented way to run notebooks interactively; ipykernel
+# supplies the kernel that jupyterlab and nbclient both use.
+jupyterlab==4.6.6
+ipykernel==7.4.0
+
+# --- Module 16 and Lab 26: the local prediction service ----------------------
+# The service runs in-process through httpx's ASGI transport or on 127.0.0.1.
+# It is never exposed to a network and needs no API key.
+fastapi==0.162.0
+pydantic==2.13.5
+httpx==0.28.1
+
+# --- Optional: local language model (Module 11, one section) -----------------
+# The M11 notebook degrades gracefully when Ollama is absent; it is deliberately
+# NOT a pip dependency. Install it only if you want to run the local-model cell:
+#   https://ollama.com  then  ollama pull llama3.2:1b   (~1 GB, CPU-friendly)

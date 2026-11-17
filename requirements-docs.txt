@@ -1,0 +1,20 @@
+# Documentation build dependencies — website only.
+#
+# Install with:  python -m pip install -r requirements-docs.txt
+#
+# These packages build the course website. They deliberately exclude the
+# laboratory stack (PyTorch, Hugging Face, Jupyter): a reader who only wants
+# to read the course should not download gigabytes of ML dependencies.
+#
+# Pinned exactly so that a published site is reproducible from a commit.
+# Upgrade deliberately, one package at a time, and rebuild with --strict.
+
+mkdocs==1.6.1
+mkdocs-material==9.8.0
+pymdown-extensions==12.3
+
+# Planned, not yet enabled: notebook rendering for the laboratory phase.
+# mkdocs-jupyter==0.25.1
+#
+# Planned, release builds only: HTML/CSS/JS minification.
+# mkdocs-minify-plugin==0.8.0

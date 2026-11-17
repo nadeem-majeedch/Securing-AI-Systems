@@ -1,0 +1,56 @@
+# --- Local tooling (never part of the course) --------------------------------
+.freebuff/
+
+# --- Python ------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.venv-docs/
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# --- Notebook execution artefacts -------------------------------------------
+.ipynb_checkpoints/
+*.executed.ipynb
+
+# --- Datasets and model artefacts (fetched by scripts, never committed) ------
+data/
+models/
+artifacts/
+*.pt
+*.pth
+*.onnx
+*.safetensors
+*.bin
+*.h5
+# The two laboratory fixtures are small, generated, and required for the
+# artefact-integrity lab; a clone without them cannot run Module 15.
+!labs/datasets/model_bundle/*.safetensors
+!labs/datasets/model_bundle_tampered/*.safetensors
+
+# --- Build output ------------------------------------------------------------
+site/
+.cache/
+*.log
+.pages-test/
+# --- Deployment ---------------------------------------------------------------
+# No deployment secrets are stored here; the workflow uses GITHUB_TOKEN only.
+
+
+# --- Local environment and secrets ------------------------------------------
+.env
+.env.*
+!.env.example
+
+# --- Operating system and editors -------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*.swp
+.venv-verify/

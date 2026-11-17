@@ -1,0 +1,50 @@
+{#-
+  Custom footer for Securing AI Systems.
+  Renders course, instructor and provenance information in place of the
+  default single copyright line.
+-#}
+<div class="md-copyright sas-footer">
+  <div class="sas-footer__grid">
+    <div class="sas-footer__block">
+      <div class="sas-footer__heading">Securing AI Systems</div>
+      <div class="sas-footer__text">
+        A Practical Self-Study Course for BS Data Science Students
+      </div>
+    </div>
+
+    <div class="sas-footer__block">
+      <div class="sas-footer__heading">Instructor</div>
+      <div class="sas-footer__text">
+        Engr. Dr. Muhammad Nadeem Majeed<br>
+        Professor, Department of Data Science (PUCIT)<br>
+        University of the Punjab, Lahore, Pakistan
+      </div>
+    </div>
+
+    <div class="sas-footer__block">
+      <div class="sas-footer__heading">Study</div>
+      <div class="sas-footer__text">
+        <a href="{{ 'getting-started/' | url }}">Getting started</a> ·
+        <a href="{{ 'roadmap/' | url }}">Roadmap</a> ·
+        <a href="{{ 'modules/' | url }}">Modules</a> ·
+        <a href="{{ 'labs/' | url }}">Labs</a> ·
+        <a href="{{ 'projects/' | url }}">Projects</a>
+        <br>
+        <a href="{{ 'frameworks/' | url }}">Frameworks</a> ·
+        <a href="{{ 'research/' | url }}">Research</a> ·
+        <a href="{{ 'case-studies/' | url }}">Case studies</a> ·
+        <a href="{{ 'glossary/' | url }}">Glossary</a> ·
+        <a href="{{ 'references/' | url }}">References</a> ·
+        <a href="{{ 'attribution/' | url }}">Credits</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="sas-footer__meta">
+    {% if config.copyright %}
+      <span>{{ config.copyright }}</span>
+    {% endif %}
+    <span class="sas-footer__sep" aria-hidden="true">·</span>
+    <span>Course materials are under review; see the repository for licence status.</span>
+  </div>
+</div>

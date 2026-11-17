@@ -1,0 +1,18 @@
+{
+  "bundle": "toy-classifier",
+  "version": "1.0.0",
+  "files": {
+    "config.json": {
+      "sha256": "edd0175cc071f7321c9b8dba74c9965d032c0fef77cdef5536e4ad04a8d3cbac",
+      "bytes": 36
+    },
+    "model-card.md": {
+      "sha256": "6daaa01de1149a3d741e6ccd022e11c571963484007a56d28d8e2604f0617cdf",
+      "bytes": 70
+    },
+    "model.safetensors": {
+      "sha256": "3e3b40e8dc3f3c42488006c050421b144b32e33f4c6f9b891800fd75fcaf5d6f",
+      "bytes": 252
+    }
+  }
+}

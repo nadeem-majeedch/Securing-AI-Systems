@@ -1,0 +1,86 @@
+{#-
+  404 page for Securing AI Systems.
+
+  This is a static template: Material renders it with no page content, which
+  is why the not-found page is authored here rather than in docs/404.md.
+  Keep it in step with the navigation structure if sections are renamed.
+-#}
+{% extends "main.html" %}
+
+{% block content %}
+  <h1>Page not found</h1>
+
+  <p>
+    The address you followed does not lead to a page on this site. It may have
+    moved during a content update, or the link may contain a typo.
+  </p>
+
+  <p>
+    This is a static site with no server-side redirects, so the honest fix is to
+    navigate from here.
+  </p>
+
+  <div class="sas-grid sas-grid--3" markdown>
+    <div class="sas-card">
+      <div class="sas-card__title">Course home</div>
+      <p>The overview, the pathway and where to begin.</p>
+      <p><a href="{{ 'index.html' | url }}">Go home &rarr;</a></p>
+    </div>
+
+    <div class="sas-card">
+      <div class="sas-card__title">All modules</div>
+      <p>Twenty modules in five parts, with a description of each.</p>
+      <p><a href="{{ 'modules/' | url }}">Browse modules &rarr;</a></p>
+    </div>
+
+    <div class="sas-card">
+      <div class="sas-card__title">Learning roadmap</div>
+      <p>The full order of study and the checkpoint gates.</p>
+      <p><a href="{{ 'roadmap/' | url }}">Open the roadmap &rarr;</a></p>
+    </div>
+
+    <div class="sas-card">
+      <div class="sas-card__title">Getting started</div>
+      <p>Orientation, prerequisites, environment setup and study plans.</p>
+      <p><a href="{{ 'getting-started/' | url }}">Start here &rarr;</a></p>
+    </div>
+
+    <div class="sas-card">
+      <div class="sas-card__title">Search the course</div>
+      <p>
+        Use the search box at the top of the page. It indexes every published
+        page, including the laboratories and the glossary.
+      </p>
+    </div>
+
+    <div class="sas-card">
+      <div class="sas-card__title">Glossary</div>
+      <p>Every specialised term used in the course, defined.</p>
+      <p><a href="{{ 'glossary/' | url }}">Open the glossary &rarr;</a></p>
+    </div>
+  </div>
+
+  <h2>If a link from the course brought you here</h2>
+
+  <p>
+    That is a defect in the course, not in your typing. Broken internal links are
+    caught by the build, so a live broken link usually means the page you wanted
+    was renamed in a recent update. The
+    <a href="{{ 'modules/' | url }}">module index</a> is the fastest way
+    back to a module that has moved.
+  </p>
+
+  <h2>Keyboard and screen reader users</h2>
+
+  <p>
+    The site's navigation is fully operable without a mouse. Press
+    <kbd>Tab</kbd> to reach the header, then use the search field or the sidebar.
+    Material's search also supports <kbd>/</kbd> to focus the search box and
+    <kbd>Esc</kbd> to close it.
+  </p>
+
+  <p class="sas-noscript">
+    Nothing was lost &mdash; this page simply does not exist. The course home page
+    is always one click away: <a href="{{ 'index.html' | url }}">Securing AI Systems</a>.
+  </p>
+{% endblock %}
